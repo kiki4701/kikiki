@@ -26,7 +26,7 @@
 	BoardDAO boardDAO = new BoardDAO();
 	
 	try{
-		int cnt = boardDAO.UpdateReadCount(Integer.parseInt(no));
+		int cnt = boardDAO.updateReadCount(Integer.parseInt(no));
 		
 		//3
 		if(cnt>0){
