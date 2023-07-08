@@ -9,14 +9,13 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.herbmall.db.ConnectionPoolMgr;
-import com.herbmall.db.ConnectionPoolMgr1;
+import com.herbmall.db.ConnectionPoolMgr2;
 
 public class ReBoardDAO {
-	private ConnectionPoolMgr1 pool;
+	private ConnectionPoolMgr2 pool;
 
 	public ReBoardDAO() {
-		pool=ConnectionPoolMgr1.getInstance();
+		pool= new ConnectionPoolMgr2();
 	}
 
 	/**

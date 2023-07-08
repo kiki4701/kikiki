@@ -9,12 +9,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.db.ConnectionPoolMgr;
+import com.db.ConnectionPoolMgr2;
 
 public class PdDAO {
-	private ConnectionPoolMgr pool;
+	private ConnectionPoolMgr2 pool;
 	
 	public PdDAO() {
-		pool=new ConnectionPoolMgr();
+		pool=new ConnectionPoolMgr2();
 	}
 	
 	//[1] 입력, 수정의 경우 매개변수가 DTO인 메서드 이용

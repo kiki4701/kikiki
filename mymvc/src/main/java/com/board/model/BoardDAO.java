@@ -8,13 +8,13 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.db.ConnectionPoolMgr;
+import com.db.ConnectionPoolMgr2;
 
 public class BoardDAO {
-	private ConnectionPoolMgr pool;
+	private ConnectionPoolMgr2 pool;
 
 	public BoardDAO() {
-		pool = new ConnectionPoolMgr();
+		pool = new ConnectionPoolMgr2();
 	}
 	
 	/**
