@@ -86,13 +86,14 @@ public class BookDAO {
 				int price = rs.getInt("price");
 				String publisher = rs.getString("publisher");
 				Timestamp joindate = rs.getTimestamp("joindate");
-				
+
+				dto.setNo(no);
 				dto.setTitle(title);
 				dto.setPrice(price);
 				dto.setPublisher(publisher);
 				dto.setJoindate(joindate);
 			}
-			System.out.println("Title이름으로 검색결과: " + dto + ", 매개변수 no: " + no);
+			System.out.println("번호로 검색결과: " + dto + ", 매개변수 no: " + no);
 			return dto;
 		} finally {
 			pool.dbClose(rs, ps, con);
@@ -171,8 +172,8 @@ public class BookDAO {
 		} finally {
 			pool.dbClose(rs, ps, con);
 		}
-
 	}
+	
 
 
 }//

@@ -1,3 +1,4 @@
+<%@page import="com.book.model.BookService"%>
 <%@page import="java.sql.SQLException"%>
 <%@page import="com.book.model.BookDTO"%>
 <%@page import="com.book.model.BookDAO"%>
@@ -9,24 +10,7 @@
 <%
 	String no = request.getParameter("no");
 
-	if(no==null || no.isEmpty()){%>
-		<script type="text/javascript">
-			alert("잘못된 url입니다!")
-			location.href="bookList.jsp";
-		</script>
-		
-	<%	return;
-	}
-	
-	BookDAO bookDao = new BookDAO();
-	BookDTO dto = new BookDTO();
-	String title = "";
-	try{
-		dto=bookDao.selectByNo(Integer.parseInt(no));
-		title = dto.getTitle();
-	}catch(SQLException e){
-		e.printStackTrace();
-	}
+	BookDTO dto = (BookDTO)request.getAttribute("dto");
 %>
 <meta charset="UTF-8">
 <title>bookDetail.jsp</title>
@@ -35,7 +19,7 @@
 	$(function() {
 		$('#aDel').click(function(){
 			if(confirm("삭제하시겠습니까?")){
-				location.href="delete.jsp?no=<%=no%>";
+				location.href="<%=request.getContextPath()%>/book/bookDelete.do?no=<%=no%>";
 			}
 		});
 	});
@@ -50,7 +34,7 @@
 		<%=dto.getNo()%></p>
 	<p>
 		책 제목 :
-		<%=title%></p>
+		<%=dto.getTitle()%></p>
 	<p>
 		가격 :
 		<%=dto.getPrice()%>원
@@ -59,8 +43,8 @@
 		등록일 :
 		<%=dto.getJoindate()%></p>
 
-	<a href="bookList.jsp">목록</a>
+	<a href="<%=request.getContextPath()%>/book/bookList.do">목록</a>
 	<a href="bookEdit.jsp">수정</a>
-	<a href="delete.jsp">삭제</a>
+	<a href="#" id="aDel">삭제</a>
 </body>
 </html>

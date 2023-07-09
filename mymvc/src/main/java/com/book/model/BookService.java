@@ -17,4 +17,12 @@ public class BookService {
 	public List<BookDTO> selectAll() throws SQLException  { //전체조회 db작업
 		return bookDao.selectAll();
 	}
+	
+	public BookDTO selectByNo(int no) throws SQLException {
+		return bookDao.selectByNo(no);
+	}
+	
+	public int deleteBook(int no) throws SQLException { //삭제
+		return bookDao.deleteBook(no);
+	}
 }
