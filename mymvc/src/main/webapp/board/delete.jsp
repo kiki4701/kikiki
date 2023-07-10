@@ -40,14 +40,6 @@
 	//detail.jsp 에서 삭제 눌렀을 때 get방식으로 이동
 	//1. 파라미터 받기
 	String no = request.getParameter("no");
-
-	if(no == null || no.isEmpty()){%>
-		<script type="text/javascript">
-			alert('잘못된 URL입니다.');
-			location.href='list.jsp';		
-		</script>
-	<% return;
-	}
 %>
 <script type="text/javascript">
 	
@@ -55,7 +47,7 @@
 </head>
 <body>
 <div class="divForm">
-<form name="frmDelete" method="post"	action="delete_ok.jsp" >
+<form name="frmDelete" method="post"	action="<%=request.getContextPath()%>/board/delete_ok.do" >
 		<fieldset>
 		<legend>글 삭제</legend>
 		<input type="hidden" name="no" value="<%=no%>">
@@ -69,7 +61,7 @@
 	        <div class="center">
 	            <input type ="submit"  value="삭제" />
 	            <input type = "Button" value="글목록" 
-                	OnClick="location.href='list.jsp'" />
+                	OnClick="location.href='<%=request.getContextPath()%>/board/list.do'" />
 	        </div>
 	    </fieldset>
     </form>

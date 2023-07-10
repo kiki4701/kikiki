@@ -77,7 +77,7 @@
 	<%if(!isEdit){%>
 		action="<%=request.getContextPath() %>/board/write_ok.do"
 	<%	}else{%>
-		action="edit_ok.jsp"	
+		action="<%=request.getContextPath() %>/board/edit_ok.do"	
 	<%	}	%>  >
  <fieldset> 
 	<legend><%=pageTitle %></legend>

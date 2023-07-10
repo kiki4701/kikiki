@@ -4,14 +4,13 @@
 <%@page import="com.book.model.BookDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
 <%
-	//String no = request.getParameter("no");
+	String no = request.getParameter("no");
 
-	//BookDTO dto = (BookDTO)request.getAttribute("dto");
+	BookDTO dto = (BookDTO)request.getAttribute("dto");
 %>
 <meta charset="UTF-8">
 <title>bookDetail.jsp</title>
@@ -20,8 +19,7 @@
 	$(function() {
 		$('#aDel').click(function(){
 			if(confirm("삭제하시겠습니까?")){
-				<%-- location.href="<%=request.getContextPath()%>/book/bookDelete.do?no=${dto.no}"; --%>
-				location.href="<c:url value='/book/bookDelete.do?no=${dto.no}'/>";
+				location.href="<%=request.getContextPath()%>/book/bookDelete.do?no=<%=no%>";
 			}
 		});
 	});
@@ -29,23 +27,23 @@
 </head>
 <body>
 	<h1>상품 상세보기</h1>
-	<p>${dto.no }을 클릭하셨습니다
+	<p><%=no%>을 클릭하셨습니다
 	</p>
 	<p>
 		번호 :
-		${dto.no }</p>
+		<%=dto.getNo()%></p>
 	<p>
 		책 제목 :
-		${dto.title }</p>
+		<%=dto.getTitle()%></p>
 	<p>
 		가격 :
-		${dto.price }원
+		<%=dto.getPrice()%>원
 	</p>
 	<p>
 		등록일 :
-		${dto.joindate }</p>
+		<%=dto.getJoindate()%></p>
 
-	<a href="<c:url value='/book/bookList.do'/>">목록</a>
+	<a href="<%=request.getContextPath()%>/book/bookList.do">목록</a>
 	<a href="bookEdit.jsp">수정</a>
 	<a href="#" id="aDel">삭제</a>
 </body>

@@ -7,6 +7,8 @@
 <%@page import="java.io.PrintWriter"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,36 +22,33 @@
 </head>
 <body>
 	<%
-	List<BookDTO> list = (List<BookDTO>)request.getAttribute("list");
+	//List<BookDTO> list = (List<BookDTO>)request.getAttribute("list");
 	
-	SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-dd");
-	DecimalFormat df = new DecimalFormat("#,###");
+	//SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-dd");
+	//DecimalFormat df = new DecimalFormat("#,###");
 	%>
 	<table border = "1">
 		<tr>
 			<th>번호</th><th>제목</th><th>가격</th><th>출판사</th><th>등록일자</th>
 		</tr>
-		<%
-		if(list==null || list.isEmpty()){ %>
-		<tr>
-			<td colspan="5">데이터가 없습니다.</td>
-		</tr><% 
-		}else{
-			for(int i = 0; i < list.size(); i++){
-				BookDTO dto = list.get(i);%>
+		<c:if test="${empty list }">
 			<tr>
-				<td><%=dto.getNo() %></td>
-				<td><a href="<%=request.getContextPath() %>/book/bookDetail.do?no=<%=dto.getNo() %>"><%=dto.getTitle() %></a></td>
-				<td><%=df.format(dto.getPrice()) %></td>
-				<td><%=dto.getPublisher() %></td>
-				<td><%=sdf.format(dto.getJoindate()) %></td>
+				<td colspan="5">데이터가 없습니다.</td>
 			</tr>
-			<%
-			}
-		}
-		%>
+		</c:if>
+		<c:if test="${!empty list }">
+			<c:forEach var="dto" items="${list }">
+				<tr>
+					<td>${dto.no }</td>
+					<td><a href="<c:url value='/book/bookDetail.do?no=${dto.no }'/>">${dto.title }</a></td>
+					<td><fmt:formatNumber value="${dto.price }" pattern="#,###"/></td>
+					<td>${dto.publisher }</td>
+					<td><fmt:formatDate value="${dto.joindate }" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+				</tr>
+			</c:forEach>	
+		</c:if>
 	</table>
-	<a href = "<%=request.getContextPath() %>/book/bookWrite.do"><input type = "button" value = "책등록"></a>
+	<a href = "<c:url value='/book/bookWrite.do'/>"><input type = "button" value = "책등록"></a>
 	 
 	
 </body>

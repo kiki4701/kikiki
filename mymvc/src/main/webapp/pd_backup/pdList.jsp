@@ -6,8 +6,6 @@
 <%@page import="com.pd.model.PdDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,11 +20,11 @@
 	//뷰페이지
 	//reqeust에서 결과를 받아와서 화면 처리
 	
-	//List<PdDTO> list = (List<PdDTO>)request.getAttribute("list");
+	List<PdDTO> list = (List<PdDTO>)request.getAttribute("list");
 	
 	//3. 결과 처리
-	//DecimalFormat df = new DecimalFormat("#,###");
-	//SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+	DecimalFormat df = new DecimalFormat("#,###");
+	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 %>
 <h1>상품 목록</h1>
 <table border="1" style="width: 500px">
@@ -36,34 +34,32 @@
 		<th>가격</th>
 		<th>등록일</th>
 	</tr>
-	<c:if test="${empty list }"> <!-- getAttribute("list") 때문에 list 인 것 -->
+	<%
+		if(list==null || list.isEmpty()){%>
 			<tr>
 				<td colspan="4">데이터가 없습니다.</td>
 			</tr>
-	</c:if>
-	<c:if test="${!empty list }">
+	<%	}else{%>
 		<!-- 반복시작 -->
-		<c:forEach var="dto" items="${list }">
+		<%for(int i=0;i<list.size();i++){ 
+			PdDTO dto=list.get(i);
+		%>
 			<tr>
-				<td>${dto.no }</td>
+				<td><%=dto.getNo() %></td>
 				<td>
-					<a href="<c:url value='/pd/pdDetail.do?no=${dto.no}'/>">
-						${dto.pdName }
+					<a href="<%=request.getContextPath() %>/pd/pdDetail.do?no=<%=dto.getNo() %>">
+						<%=dto.getPdName() %>
 					</a>
 				</td>
-				<td style="text-align: right;">
-					<fmt:formatNumber value="${dto.price }" pattern="#,###"/>원
-				</td>
-				<td>
-					<fmt:formatDate value="${dto.regdate }" pattern="yyyy-MM-dd"/>
-				</td>
+				<td style="text-align: right;"><%=df.format(dto.getPrice()) %>원</td>
+				<td><%=sdf.format(dto.getRegdate()) %></td>
 			</tr>
-		</c:forEach>
+		<%}//for %>
 		<!-- 반복끝 -->
-	</c:if>
+	<%}//if %>
 </table>
 <br><br>
-<a href="<c:url value='/pd/pdWrite.do'/>">상품 등록</a>
+<a href="<%=request.getContextPath() %>/pd/pdWrite.do">상품 등록</a>
 
 </body>
 </html>

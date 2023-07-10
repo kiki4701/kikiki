@@ -316,6 +316,37 @@ public class BoardDAO {
 		}
 	}
 	
+	public boolean checkPwd(int no, String pwd) throws SQLException {
+		
+		//비밀번호 일치여부 체크하기
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		boolean result = false;
+		
+		try {
+			con = pool.getConnection();
+			
+			String sql = "select pwd from board where no=?";
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, no);
+			
+			rs = ps.executeQuery();
+			if(rs.next()) {
+				String dbPwd = rs.getString("pwd");
+				if(dbPwd.equals(pwd)) {
+					result = true;
+				}
+			}
+			System.out.println("비밀번호 일치여부 체크 결과 : " + result);
+			
+			return result;
+		} finally {
+			pool.dbClose(rs, ps, con);
+		}
+		
+	}
+	
 	
 	
 }

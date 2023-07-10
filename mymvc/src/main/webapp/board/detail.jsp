@@ -58,7 +58,7 @@
 		</div>
 		<div class="center">
 			<a href='<%=request.getContextPath() %>/board/edit.do?no=<%=no%>'>수정</a> |
-        	<a href='delete.jsp?no=<%=no%>'>삭제</a> |
+        	<a href='<%=request.getContextPath() %>/board/delete.do?no=<%=no%>'>삭제</a> |
         	<a href='<%=request.getContextPath()%>/board/list.do'>목록</a>			
 		</div>
 	</div>

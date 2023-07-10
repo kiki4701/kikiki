@@ -34,4 +34,16 @@ public class BoardService {
 		return boardDao.selectByNo(no);
 	}
 	
+	public int updateBoard(BoardVO vo) throws SQLException {
+		return boardDao.updateBoard(vo);
+	}
+	
+	public boolean checkPwd(int no, String pwd) throws SQLException {
+		return boardDao.checkPwd(no, pwd);
+	}
+	
+	public int deleteBoard(int no, String pwd) throws SQLException {
+		return boardDao.deleteBoard(no, pwd);
+	}
+	
 }

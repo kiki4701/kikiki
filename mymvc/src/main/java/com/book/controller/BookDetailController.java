@@ -15,6 +15,7 @@ public class BookDetailController implements Controller{
 	public String requestProcess(HttpServletRequest request, HttpServletResponse response) throws Throwable {
 		//1. 파라미터 받기
 		String no = request.getParameter("no");
+		System.out.println("bookdetail 파라미터 : " + no);
 		
 		if(no == null || no.isEmpty()) {
 			request.setAttribute("msg", "잘못된 url 입니다.");

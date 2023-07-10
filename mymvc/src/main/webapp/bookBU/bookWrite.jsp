@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,7 +12,7 @@
 </head>
 <body>
 	<h1>책 등록</h1>
-	<form name="formWrite" action="<c:url value='/book/bookWrite_ok.do'/>" method="post">
+	<form name="formWrite" action="<%=request.getContextPath() %>/book/bookWrite_ok.do" method="post">
 		책제목 : <input type="text" name="title"><br>
 		가격 : 	<input type="text" name="price"><br> 
 		퍼블리셔 : <input type="text" name="publisher"><br>
@@ -21,6 +20,6 @@
 		  		<input type="reset" value="취소">
 	</form>
 	<hr>
-	<a href="<c:url value='/book/bookList.do'/>">책 목록</a>
+	<a href="<%=request.getContextPath() %>/book/bookList.do">책 목록</a>
 </body>
 </html>
