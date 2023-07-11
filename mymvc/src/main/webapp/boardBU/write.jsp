@@ -1,8 +1,6 @@
 <%@page import="com.board.model.BoardVO"%>
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -18,13 +16,12 @@
 	//=> 파라미터 no가 있는 경우는 글수정
 	
 	//1
-	//String no=request.getParameter("no");
-	//BoardVO vo = (BoardVO)request.getAttribute("vo");
+	String no=request.getParameter("no");
+	BoardVO vo = (BoardVO)request.getAttribute("vo");
 	
 	
-/* 	boolean isEdit=false;
+	boolean isEdit=false;
 	String pageTitle="", btLabel="";
-	
 	if(no!=null && !no.isEmpty()){
 		isEdit=true;  //글수정
 		
@@ -45,29 +42,18 @@
 		content = vo.getContent();
 		if(email == null) email = "";
 		if(content == null) content = "";
-	} */
+	}
 	
 %>
 
-<c:if test="${!empty param.no }">
-	<c:set var="pageTitle" value="글 수정"></c:set>
-	<c:set var="btLabel" value="수정"></c:set>
-	<c:set var="url" value="/board/edit_ok.do"></c:set>
-</c:if>
-<c:if test="${empty param.no }">
-	<c:set var="pageTitle" value="글쓰기"/>
-	<c:set var="btLabel" value="등록"/>
-	<c:set var="url" value="/board/write_ok.do"/>
-</c:if>
-
-<title>자유게시판 ${pageTitle } - 허브몰</title>
+<title>자유게시판 <%=pageTitle %> - 허브몰</title>
 <script type="text/javascript" src="../js/jquery-3.7.0.min.js"></script>
 <script type="text/javascript">
 	$(function(){
         $('#title').focus();
 		
 		$('input[type=button]').click(function(){
-			location.href	='<c:url value='/board/list.do'/>';
+			location.href	='<%=request.getContextPath()%>/board/list.do';
 		});
 		
 		$('input[type=submit]').click(function(){
@@ -87,21 +73,26 @@
 </head>
 <body>
 <div class="divForm">
-<form name="frmWrite" method="post" action="<c:url value='${url }'/>">
+<form name="frmWrite" method="post" 
+	<%if(!isEdit){%>
+		action="<%=request.getContextPath() %>/board/write_ok.do"
+	<%	}else{%>
+		action="<%=request.getContextPath() %>/board/edit_ok.do"	
+	<%	}	%>  >
  <fieldset> 
-	<legend>${pageTitle }</legend>
+	<legend><%=pageTitle %></legend>
 		<!-- 수정 처리시 no가 필요하므로 hidden 필드에 넣어서 보내준다 -->
-		<input type="text" name="no" value="${param.no }">
+		<input type="text" name="no" value="<%=no%>">
 		
         <div class="firstDiv">
             <label for="title">제목</label>
             <input type="text" id="title" name="title" class="infobox" 
-            	value="${vo.title }"/>
+            	value="<%=title%>"/>
         </div>
         <div>
             <label for="name">작성자</label>
             <input type="text" id="name" name="name" class="infobox" 
-            	value="${vo.name }"/>
+            	value="<%=name%>"/>
         </div>
         <div>
             <label for="pwd">비밀번호</label>
@@ -109,14 +100,14 @@
         </div>
         <div>
             <label for="email">이메일</label>
-            <input type="text" id="email" name="email" value="${vo.email }"/>
+            <input type="text" id="email" name="email" value="<%=email%>"/>
         </div>
         <div>  
         	<label for="content">내용</label>        
- 			<textarea id="content" name="content" rows="12" cols="40">${vo.content }</textarea>
+ 			<textarea id="content" name="content" rows="12" cols="40"><%=content %></textarea>
         </div>
         <div class="center">
-            <input type = "submit" value="${btLabel }"/>
+            <input type = "submit" value="<%=btLabel %>"/>
             <input type = "Button" value="글목록" />         
         </div>
     </fieldset>

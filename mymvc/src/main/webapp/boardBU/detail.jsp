@@ -3,8 +3,6 @@
 <%@page import="com.board.model.BoardVO"%>
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE HTML>
 <html lang="ko">
 <head>
@@ -28,7 +26,7 @@
 	<%
 	//http://localhost:9090/herbmall/board/detail.jsp?no=3
 	//countUpdate.jsp에서 조회수 증가 성공하면 get방식으로 이동
-/* 	String no = request.getParameter("no");
+	String no = request.getParameter("no");
 	BoardVO vo = (BoardVO)request.getAttribute("vo");
 	
 	//3. 결과 처리
@@ -37,37 +35,31 @@
 		content=content.replace("\r\n", "<br>");
 	}else{
 		content="";
-	} */
+	}
 	
 	%>
 
 	<h2>글 상세보기</h2>
 	<div class="divForm">
 		<div class="firstDiv">
-			<span class="sp1">제목</span> <span>${vo.title }</span>
+			<span class="sp1">제목</span> <span><%=vo.getTitle() %></span>
 		</div>
 		<div>
-			<span class="sp1">작성자</span> <span>${vo.name }</span>
+			<span class="sp1">작성자</span> <span><%=vo.getName() %></span>
 		</div>
 		<div>
-			<span class="sp1">등록일</span> <span>${vo.regdate }</span>
+			<span class="sp1">등록일</span> <span><%=vo.getRegdate() %></span>
 		</div>
 		<div>
-			<span class="sp1">조회수</span> <span>${vo.readcount }</span>
+			<span class="sp1">조회수</span> <span><%=vo.getReadcount() %></span>
 		</div>
-		<% pageContext.setAttribute("newLine", "\r\n"); %>
-		<c:set var="content" value="${fn:replace(vo.content, newLine, '<br>') } "/>
-										<!-- 이렇게도 가능하다! 하지만 정석은 위에꺼-->
-<%-- 	<c:set var="content" value="${fn:replace(vo.content, '\\r\\n', '<br>') } "/> --%>
-
-		
 		<div class="lastDiv">			
-			<p class="content">${content }</p>
+			<p class="content"><%=content %></p>
 		</div>
 		<div class="center">
-			<a href='<c:url value='/board/edit.do?no=${param.no}'/>'>수정</a> |
-        	<a href='<c:url value='/board/delete.do?no=${param.no}'/>'>삭제</a> |
-        	<a href='<c:url value='/board/list.do'/>'>목록</a>			
+			<a href='<%=request.getContextPath() %>/board/edit.do?no=<%=no%>'>수정</a> |
+        	<a href='<%=request.getContextPath() %>/board/delete.do?no=<%=no%>'>삭제</a> |
+        	<a href='<%=request.getContextPath()%>/board/list.do'>목록</a>			
 		</div>
 	</div>
 

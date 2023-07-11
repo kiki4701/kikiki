@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans   
+       http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+       http://www.springframework.org/schema/aop
+	   http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
+
+	<bean name="articleService"	class="com.di.ArticleServiceImpl2">
+		<constructor-arg>
+			<ref bean="articleDAO" />
+		</constructor-arg>
+	</bean>
+	
+<!-- 	<bean name="articleService3" class="com.di.ArticleServiceImpl3">
+		<property name="articleDao" ref="articleDAO"></property>
+	</bean> 
+-->
+	<bean name="articleService3" class="com.di.ArticleServiceImpl3"
+		p:articleDao-ref="articleDAO">
+	</bean>
+
+<!-- 	<bean name="articleDAO" class="com.di.OracleArticleDAO">
+	</bean> -->
+	<bean name="articleDAO" class="com.di.MysqlArticleDAO">
+	</bean>
+	
+	<bean id="loggingAsp" class="com.aop.LoggingAspect"></bean>
+	<!-- loggingAspect의 logging() 메서드를 이름이 Service로 끝나는 인터페이스를 구현한
+	모든 클래스의 모든 메서드 앞, 뒤로 실행하라 -->
+	<aop:config>
+		<aop:pointcut expression="execution(* *..*Service.*(..))" 
+			id="servicePointcut"/>
+		
+		<aop:aspect id="loggingAspect" ref="loggingAsp">
+			<aop:around pointcut-ref="servicePointcut" method="logging"/>
+		</aop:aspect>
+	</aop:config>
+	
+	<bean name="loggingDaoAsp" class="com.aop.LoggingDAOAspect"></bean>
+	
+	<aop:config>                    <!--매개변수  클래스명에 DAO    나머지는 못들ㄷ음.. ㅅㅂ -->
+		<aop:pointcut expression="execution(* *..*DAO*.*(..))"
+			 id="daoPointCut"/>
+		<aop:aspect id="LogDaoAspect" ref="loggingDaoAsp">
+			<aop:before method="before" pointcut-ref="daoPointCut"/>
+			<aop:after-returning method="afterReturning" pointcut-ref="daoPointCut"/>
+			<aop:after-throwing method="afterError" pointcut-ref="daoPointCut"/>
+		</aop:aspect>
+	</aop:config>
+	
+
+</beans>

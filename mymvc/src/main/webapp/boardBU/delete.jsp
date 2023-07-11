@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE HTML>
 <html lang="ko">
 <head>
@@ -48,12 +47,12 @@
 </head>
 <body>
 <div class="divForm">
-<form name="frmDelete" method="post"	action="<c:url value='/board/delete_ok.do'/>" >
+<form name="frmDelete" method="post"	action="<%=request.getContextPath()%>/board/delete_ok.do" >
 		<fieldset>
 		<legend>글 삭제</legend>
-		<input type="hidden" name="no" value="${param.no }">
+		<input type="hidden" name="no" value="<%=no%>">
 	        <div>           
-	        	<span class="sp">  ${param.no }번 글을 삭제하시겠습니까?</span>                        
+	        	<span class="sp">  <%=no %>번 글을 삭제하시겠습니까?</span>                        
 	        </div>
 	        <div>           
 	            <label for="pwd">비밀번호</label>
@@ -62,7 +61,7 @@
 	        <div class="center">
 	            <input type ="submit"  value="삭제" />
 	            <input type = "Button" value="글목록" 
-                	OnClick="location.href='<c:url value='/board/list.do'/>'" />
+                	OnClick="location.href='<%=request.getContextPath()%>/board/list.do'" />
 	        </div>
 	    </fieldset>
     </form>
